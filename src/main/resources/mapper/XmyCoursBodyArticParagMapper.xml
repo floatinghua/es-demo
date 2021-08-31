@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pgy.esdemo.mapper.XmyCoursBodyArticParagMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.pgy.esdemo.entity.XmyCoursBodyArticParag">
+        <id column="paragraph_id" property="paragraphId" />
+        <result column="article_id" property="articleId" />
+        <result column="paragraph_title" property="paragraphTitle" />
+        <result column="paragraph_cotent" property="paragraphCotent" />
+        <result column="content" property="content" />
+        <result column="sort" property="sort" />
+        <result column="use_flag" property="useFlag" />
+        <result column="create_time" property="createTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+        <result column="paragraph_html" property="paragraphHtml" />
+        <result column="html_uri" property="htmlUri" />
+        <result column="md_content" property="mdContent" />
+        <result column="md_html" property="mdHtml" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        paragraph_id, article_id, paragraph_title, paragraph_cotent, content, sort, use_flag, create_time, create_by, update_time, update_by, remark, paragraph_html, html_uri, md_content, md_html
+    </sql>
+
+</mapper>

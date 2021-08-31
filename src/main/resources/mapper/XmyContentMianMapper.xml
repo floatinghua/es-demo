@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pgy.esdemo.mapper.XmyContentMianMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.pgy.esdemo.entity.XmyContentMian">
+        <id column="content_id" property="contentId"/>
+        <result column="content_name" property="contentName"/>
+        <result column="content_introduction" property="contentIntroduction"/>
+        <result column="cover_image" property="coverImage"/>
+        <result column="upload_user_id" property="uploadUserId"/>
+        <result column="uploud_user_name" property="uploudUserName"/>
+        <result column="upload_time" property="uploadTime"/>
+        <result column="dept_id" property="deptId"/>
+        <result column="content_labels" property="contentLabels"/>
+        <result column="content_son_type" property="contentSonType"/>
+        <result column="page_template_type" property="pageTemplateType"/>
+        <result column="sheet_status" property="sheetStatus"/>
+        <result column="template_id" property="templateId"/>
+        <result column="use_flag" property="useFlag"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="remark" property="remark"/>
+        <result column="sort_by" property="sortBy"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        content_id,
+        content_name,
+        content_introduction,
+        cover_image,
+        upload_user_id,
+        uploud_user_name,
+        upload_time,
+        dept_id,
+        content_labels,
+        content_son_type,
+        page_template_type,
+        sheet_status,
+        template_id,
+        use_flag,
+        create_time,
+        create_by,
+        update_time,
+        update_by,
+        remark,
+        sort_by
+    </sql>
+
+    <select id="listContentModel" resultType="com.pgy.esdemo.dto.XmyContentMianSearchVo">
+        select xcm.content_id,
+               xcm.content_name,
+               xcm.content_introduction,
+               xcm.cover_image,
+               xcm.content_son_type,
+               xcm.page_template_type,
+               xcm.sheet_status,
+               xcm.template_id,
+               concat(
+                       (SELECT classify_name
+                        FROM xmy_clas_setd xcs
+                        WHERE xcs.classify_id =
+                              (SELECT parent_id FROM xmy_clas_setd xc WHERE xc.classify_id = xcss.classify_id))
+                       , '-->',
+                       (SELECT classify_name FROM xmy_clas_setd xcs2 WHERE xcs2.classify_id = xcss.classify_id)
+                       ) AS     modleName,
+               xcss.classify_id conClassIds
+        from xmy_content_mian xcm
+                     left join xmy_content_clas_center xcss on xcss.content_id = xcm.content_id
+        <where>
+            <trim prefixOverrides="and">
+                and xcm.use_flag=1
+                <if test="contentIds != null and contentIds.size() != 0">
+                    and xcm.content_id in
+                    <foreach collection="contentIds" open="(" close=")" separator="," item="id">
+                        #{id}
+                    </foreach>
+                </if>
+            </trim>
+
+        </where>
+    </select>
+
+    <select id="searchFirst" resultType="java.lang.String">
+        select content_id
+        from xmy_content_clas_setd_center
+        where con_class_id in
+              (select con_class_id
+               from xmy_clas_setd_cours_center
+               where courseware_id in
+                     (select courseware_id
+                      from xmy_cours_body_artic
+                      where article_id in
+                            (select article_id
+                             from xmy_cours_body_artic_parag
+                             where paragraph_title like CONCAT('%', #{text}, '%')
+                                or paragraph_cotent like CONCAT('%', #{text}, '%')
+                                    )
+                             )
+                      )
+    </select>
+
+    <select id="searchSecond" resultType="java.lang.String">
+        select content_id
+        from xmy_content_mian xm
+        where xm.content_id in (select obj_id
+                                from xmy_cours_obj_center
+                                where courseware_id in
+                                      (select courseware_id
+                                       from xmy_cours_body_artic
+                                       where article_id in
+                                             (select article_id
+                                              from xmy_cours_body_artic_parag
+                                              where paragraph_title like CONCAT('%', #{text}, '%')
+                                                 or content like CONCAT('%', #{text}, '%'))))
+          and xm.content_id in (
+                select a.content_id
+                from xmy_content_mian a
+                where (a.content_name like CONCAT('%', #{text}, '%') or
+                       a.content_introduction like CONCAT('%', #{text}, '%'))
+                  and a.use_flag = '1'
+                )
+    </select>
+
+    <select id="searchThird" resultType="java.lang.String">
+        select content_id
+        from xmy_content_mian xm
+        where xm.content_id in
+              (select content_id
+               from xmy_content_clas_setd_center
+               where con_class_id in
+                     (select parent_id
+                      from xmy_content_clas_setd
+                      where con_class_id in
+                            (select con_class_id
+                             from xmy_clas_setd_cours_center
+                             where courseware_id in
+                                   (select courseware_id
+                                    from xmy_cours_body_artic
+                                    where article_id in
+                                          (select article_id
+                                           from xmy_cours_body_artic_parag
+                                           where paragraph_title like CONCAT('%', #{text}, '%')
+                                              or content like CONCAT('%', #{text}, '%'))))))
+          and xm.content_id in (
+                select a.content_id
+                from xmy_content_mian a
+                where (a.content_name like CONCAT('%', #{text}, '%') or
+                       a.content_introduction like CONCAT('%', #{text}, '%'))
+                  and a.use_flag = '1'
+                )
+    </select>
+
+    <select id="getPara" resultType="java.lang.String">
+        <!--paragraph_cotent-->
+        select (case when xcba.content is null then ''
+                else xcba.content
+                 end) as content
+        from xmy_cours_body_artic_parag xcba
+                where
+        xcba.use_flag=1
+        and
+        xcba.article_id in (
+                select article_id
+                from xmy_cours_body_artic where
+        xmy_cours_body_artic.use_flag=1
+        and
+        courseware_id in (
+        <if test="contentSonType != null and contentSonType != '' and contentSonType == 2">
+            select courseware_id
+            from xmy_clas_setd_cours_center
+                    where con_class_id in (
+                    select con_class_id from xmy_content_clas_setd_center where content_id = #{contentId}
+                    )
+        </if>
+
+        <if test="contentSonType != null and contentSonType != '' and contentSonType == 1">
+            select  m.courseware_id
+            from xmy_cours_main m
+            inner join xmy_clas_setd_cours_center cen on cen.courseware_id = m.courseware_id
+            WHERE cen.con_class_id in
+            <foreach collection="conIds" item="id" close=")" open="(" separator=",">
+                #{id}
+            </foreach>
+            and m.content_son_type = 1
+            and m.use_flag = '1'
+
+
+        </if>
+
+        )
+                )
+    </select>
+
+    <select id="selectConIds" resultType="java.lang.String">
+        select clas.con_class_id
+        from xmy_content_clas_setd clas
+                     LEFT JOIN xmy_content_clas_setd_center cen on cen.con_class_id = clas.con_class_id
+                     LEFT JOIN xmy_content_mian m on m.content_id = cen.content_id
+        where m.content_id = #{contentId}
+    </select>
+</mapper>

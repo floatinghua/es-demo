@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pgy.esdemo.mapper.XmyClasSetdCoursCenterMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.pgy.esdemo.entity.XmyClasSetdCoursCenter">
+        <id column="con_class_id" property="conClassId" />
+        <result column="courseware_id" property="coursewareId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        con_class_id, courseware_id
+    </sql>
+
+</mapper>

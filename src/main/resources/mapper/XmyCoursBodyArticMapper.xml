@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pgy.esdemo.mapper.XmyCoursBodyArticMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.pgy.esdemo.entity.XmyCoursBodyArtic">
+        <id column="article_id" property="articleId" />
+        <result column="courseware_id" property="coursewareId" />
+        <result column="article_name" property="articleName" />
+        <result column="sort" property="sort" />
+        <result column="show_type" property="showType" />
+        <result column="use_flag" property="useFlag" />
+        <result column="create_time" property="createTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        article_id, courseware_id, article_name, sort, show_type, use_flag, create_time, create_by, update_time, update_by, remark
+    </sql>
+
+</mapper>

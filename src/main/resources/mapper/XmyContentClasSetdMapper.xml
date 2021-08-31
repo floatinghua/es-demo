@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pgy.esdemo.mapper.XmyContentClasSetdMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.pgy.esdemo.entity.XmyContentClasSetd">
+        <id column="con_class_id" property="conClassId" />
+        <result column="con_class_type" property="conClassType" />
+        <result column="con_class_name" property="conClassName" />
+        <result column="introduction" property="introduction" />
+        <result column="parent_id" property="parentId" />
+        <result column="ancestors" property="ancestors" />
+        <result column="sort" property="sort" />
+        <result column="slogan" property="slogan" />
+        <result column="cover_image" property="coverImage" />
+        <result column="use_flag" property="useFlag" />
+        <result column="create_time" property="createTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        con_class_id, con_class_type, con_class_name, introduction, parent_id, ancestors, sort, slogan, cover_image, use_flag, create_time, create_by, update_time, update_by, remark
+    </sql>
+
+</mapper>

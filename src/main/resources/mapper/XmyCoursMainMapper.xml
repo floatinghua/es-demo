@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pgy.esdemo.mapper.XmyCoursMainMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.pgy.esdemo.entity.XmyCoursMain">
+        <id column="courseware_id" property="coursewareId" />
+        <result column="courseware_name" property="coursewareName" />
+        <result column="introduction" property="introduction" />
+        <result column="cover_image" property="coverImage" />
+        <result column="template_type" property="templateType" />
+        <result column="content_son_type" property="contentSonType" />
+        <result column="audit_status" property="auditStatus" />
+        <result column="upload_user_id" property="uploadUserId" />
+        <result column="uploud_user_name" property="uploudUserName" />
+        <result column="upload_time" property="uploadTime" />
+        <result column="qr_code" property="qrCode" />
+        <result column="dept_id" property="deptId" />
+        <result column="use_flag" property="useFlag" />
+        <result column="create_time" property="createTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        courseware_id, courseware_name, introduction, cover_image, template_type, content_son_type, audit_status, upload_user_id, uploud_user_name, upload_time, qr_code, dept_id, use_flag, create_time, create_by, update_time, update_by, remark
+    </sql>
+
+</mapper>

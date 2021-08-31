@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pgy.esdemo.mapper.XmyClasSetdMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.pgy.esdemo.entity.XmyClasSetd">
+        <id column="classify_id" property="classifyId" />
+        <result column="classify_type" property="classifyType" />
+        <result column="classify_name" property="classifyName" />
+        <result column="classify_auto" property="classifyAuto" />
+        <result column="parent_id" property="parentId" />
+        <result column="ancestors" property="ancestors" />
+        <result column="show_flag" property="showFlag" />
+        <result column="cover_image" property="coverImage" />
+        <result column="sort" property="sort" />
+        <result column="use_flag" property="useFlag" />
+        <result column="create_time" property="createTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="remark" property="remark" />
+        <result column="classify_subtitle" property="classifySubtitle" />
+        <result column="slogan" property="slogan" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        classify_id, classify_type, classify_name, classify_auto, parent_id, ancestors, show_flag, cover_image, sort, use_flag, create_time, create_by, update_time, update_by, remark, classify_subtitle, slogan
+    </sql>
+
+</mapper>
